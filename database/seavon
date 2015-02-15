@@ -1,0 +1,70 @@
+#!/usr/bin/env php
+<?php
+/**
+ * @author Gustavo Novaes <gustavonovaes93@gmail.com>
+ */
+
+define('DS', DIRECTORY_SEPARATOR);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+$db_config = require dirname(__DIR__) . '/.db';
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+
+$db_config = in_array('--production', $argv) ? $db_config['production'] : $db_config['development'];
+
+$capsule = new Capsule();
+$capsule->addConnection($db_config);
+$capsule->bootEloquent();
+$capsule->setAsGlobal();
+
+define("MIGRATIONS_PATH", __DIR__ . DS . "migrations");
+define("SEEDS_PATH", __DIR__ . DS . "seeds");
+
+function help()
+{
+    global $argv;
+    echo "usage: php " . $argv[0] . " <migrate|seed>\n";
+}
+
+function run($arrFiles)
+{
+    $pos = 1;
+    $max = count($arrFiles);
+
+    foreach ($arrFiles as $file) {
+
+        require $file;
+
+        $filename = basename($file, '.php');
+        list($order, $class) = explode('_', $filename);
+
+        echo '[' . $pos++ . '/' . $max . '] ' . $class . '...' . PHP_EOL;
+
+        (new $class)->run();
+    }
+}
+
+if ($argc <= 1) {
+    help();
+    exit;
+}
+
+switch ($argv[1]) {
+
+    case "migrate":
+        echo 'Starting migrate... ' . PHP_EOL;
+        run(glob(MIGRATIONS_PATH . DS . '*.php'));
+        break;
+
+    case "seed":
+        echo 'Starting seed... ' . PHP_EOL;
+        run(glob(SEEDS_PATH . DS . '*.php'));
+        break;
+
+    case "help":
+    case "-h":
+    case "--help":
+    default:
+        help();
+}

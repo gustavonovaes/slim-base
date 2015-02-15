@@ -1,0 +1,29 @@
+{
+    "authors": [
+        {
+            "name": "Gustavo Novaes",
+            "email": "gustavonovaes93@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "slim/slim": "2.*",
+        "clickcoder/slim-blade": "dev-master",
+        "illuminate/database": "4.1.*",
+        "RobLoach/component-installer": "*",
+        "components/jquery": "2.1.*",
+        "components/bootstrap": "3.3.*",
+        "components/font-awesome": "4.*"
+    },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "2.8.1"
+    },
+    "config": {
+        "component-dir": "public/assets/vendor"
+    },
+    "autoload" : {
+        "psr-4": {
+            "SlimBase\\": "lib/"
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<?php
+
+return array(
+    'development' => array(
+        'host'      => '',
+        'driver'    => 'sqlite',
+        'database'  => __DIR__ . DIRECTORY_SEPARATOR . '/database/development.sqlite',
+        'username'  => '',
+        'password'  => '',
+        'charset'   => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix'    => '',
+    ),
+    'production' => array(
+        'host'      => '',
+        'driver'    => 'sqlite',
+        'database'  => __DIR__ . DIRECTORY_SEPARATOR . '/database/development.sqlite',
+        'username'  => '',
+        'password'  => '',
+        'charset'   => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix'    => '',
+    )
+);
