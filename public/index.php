@@ -93,6 +93,21 @@ register_shutdown_function(function () {
     }
 });
 
+/*
+ * Logs errors that occurred before the $app->run()
+ * and displays when in development mode
+ */
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+
+    $error = print_r(func_get_args(), true);
+
+    AppLog::getInstance()->write($error , $errno);
+
+    if (MODE == "development")
+        die('<pre>'. $error . '</pre>');
+
+}, E_ALL);
+
 if (phpversion() < 5.6) {
     trigger_error('The system requires a minimum of PHP v5.6', E_ERROR);
     exit(1);
