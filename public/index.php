@@ -108,9 +108,8 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 
 }, E_ALL);
 
-if (phpversion() < 5.6) {
-    trigger_error('The system requires a minimum of PHP v5.6', E_ERROR);
-    exit(1);
+if ( ( (double) phpversion() ) < 5.5) {
+    trigger_error('The system requires a minimum of PHP v5.5', E_USER_ERROR);
 }
 
 $view = new Blade();
